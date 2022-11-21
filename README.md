@@ -4,6 +4,6 @@
 
 + **Static website on S3.** Use the object-oriented storage of AWS to build a static website using Terraform.
 
-+ **AWS CloudWatch.** Configure a CloudWatch metric alarm to send a SNS topic when 
++ **AWS CloudWatch.** Configure a CloudWatch metric alarm to send a SNS topic when the ALB gets greater than the threshold.
 
 + **AWS Application Load Balancer.** Configure both routing protocols available for ALB:  "Host-Header" and "Path Based" routing.
