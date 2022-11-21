@@ -1,1 +1,38 @@
-edd
+>ALL OF THE RESOURCES WERE REMOVED. NO ID REFERENCE IS VALID CURRENTLY
+
+aws ec2 create-internet-gateway
+
+//Attach IGW
+aws ec2 attach-internet-gateway --internet-gateway-id igw-0377821c3d689ad2c --vpc-id vpc-0e9b8e23b625a513a
+
+//Create Route table for Public Subnet
+aws ec2 create-route-table --vpc-id vpc-0e9b8e23b625a513a
+  
+//Setup Route table
+aws ec2 create-route --destination-cidr-block 0.0.0.0/0 --gateway-id igw-0377821c3d689ad2c --route-table-id rtb-0d89daf9047151fc1
+  
+//Associate Route table with the Public Subnet
+aws ec2 associate-route-table --route-table-id rtb-0d89daf9047151fc1 --subnet-id subnet-031f304382c60ab41
+
+//Create Route table for Private Subnet
+aws ec2 create-route-table --vpc-id vpc-0e9b8e23b625a513a
+
+//No need to associate Private subnet with the Internet Gateway.
+
+//Public ACL
+aws ec2 create-network-acl --vpc-id vpc-0e9b8e23b625a513a
+
+//Public ACL ingress/egress rules.	
+aws ec2 create-network-acl-entry --cidr-block 0.0.0.0/0 --ingress --network-acl-id acl-0c2fb93a41cd02aa8 --port-range From=80,To=80 --protocol tcp --rule-action allow --rule-number 1
+aws ec2 create-network-acl-entry --cidr-block 0.0.0.0/0 --ingress --network-acl-id acl-0c2fb93a41cd02aa8 --port-range From=443,To=443 --protocol tcp --rule-action allow --rule-number 2
+aws ec2 create-network-acl-entry --cidr-block 0.0.0.0/0 --egress --network-acl-id acl-0c2fb93a41cd02aa8 --port-range From=80,To=80 --protocol tcp --rule-action allow --rule-number 3
+aws ec2 create-network-acl-entry --cidr-block 0.0.0.0/0 --egress --network-acl-id acl-0c2fb93a41cd02aa8 --port-range From=443,To=443 --protocol tcp --rule-action allow --rule-number 4
+
+//Private ACL
+aws ec2 create-network-acl --vpc-id vpc-0e9b8e23b625a513a
+
+//Private ACL ingress/egress rules.	
+aws ec2 create-network-acl-entry --cidr-block 10.0.0.0/16 --ingress --network-acl-id acl-084f6ab75fb56f7f8 --port-range From=1433,To=1433 --protocol tcp --rule-action allow --rule-number 1
+aws ec2 create-network-acl-entry --cidr-block 10.0.0.0/16 --ingress --network-acl-id acl-084f6ab75fb56f7f8 --port-range From=3306,To=3306 --protocol tcp --rule-action allow --rule-number 2
+aws ec2 create-network-acl-entry --cidr-block 10.0.0.0/16 --egress --network-acl-id acl-084f6ab75fb56f7f8 --port-range From=1433,To=1433 --protocol tcp --rule-action allow --rule-number 3
+aws ec2 create-network-acl-entry --cidr-block 10.0.0.0/16 --egress --network-acl-id acl-084f6ab75fb56f7f8 --port-range From=3306,To=3306 --protocol tcp --rule-action allow --rule-number 4
