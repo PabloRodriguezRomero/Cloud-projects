@@ -1,6 +1,6 @@
 # Cloud-projects
 
-Here are some of the most relevant projects that I made during my preparation for the AWS Solution Architect Associate certification.
+Here are some of the most relevant projects that I made during my preparation for the AWS Solution Architect Associate certification:
 
 + **First steps on AWS.** Create an architecture which recieves user requests over ACL's port 80/443 in public subnet and then the private subnet over MySQL and MicrosoftSQL ports (1433 and 3306).
 
